@@ -1,0 +1,19 @@
+globals:
+  - <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
+  - <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.0.0/chai.min.js"></script>
+  - <script src="https://rawgit.com/utilise/utilise/master/utilise.js"></script>
+
+runner: tape
+
+tests: (npm run build > /dev/null) && browserify ./dist/test.js
+  -i jsdom 
+  -t utilise.filify 
+  -t babelify
+
+watch: 
+  - src
+
+browsers:
+  - chrome
+  - firefox
+  - ie11
