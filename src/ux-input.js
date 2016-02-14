@@ -10,12 +10,12 @@ export default function uxInput(state) {
     .attr('name', name)
 
   o('input', 1)
+    .property('value', iff(d => is.str(value))(d => value))
     .attr('disabled'   , disabled)
     .attr('placeholder', label)
     .on('focus.focused', focus)
     .on('keyup.value'  , keyup)
     .on('blur.focused' , blur)
-    .property('value', iff(d => is.str(value))(d => value))
 
   o('label', 1)
     .text(label) 
@@ -33,9 +33,8 @@ export default function uxInput(state) {
   }
   
   function keyup() {
-    state.value = this.value
-    console.log('state value', state.value)
-    o.draw()
+    o.emit('change', state.value = this.value)
+     .draw()
   }
 
 }

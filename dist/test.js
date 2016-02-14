@@ -116,21 +116,21 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input
 });
 
 (0, _tape2.default)('event test - focus/blur event', function (t) {
-  var host = tdraw(o('ux-input', 1).node(), _uxInput2.default, {}),
-      el = o(host)('input');
+  var host = tdraw(o('ux-input', 1), _uxInput2.default),
+      el = host('input');
 
   time(0, function (d) {
     return el.emit('focus');
   });
   time(50, function (d) {
-    return t.equal(host.className, 'is-focused', 'focus event');
+    return t.equal(host.node().className, 'is-focused', 'focus event');
   });
 
   time(100, function (d) {
     return el.emit('blur');
   });
   time(150, function (d) {
-    return t.equal(host.className, '', 'blur event');
+    return t.equal(host.node().className, '', 'blur event');
   });
 
   time(200, function (d) {
@@ -139,13 +139,19 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input
 });
 
 (0, _tape2.default)('event test - keyup event', function (t) {
-  t.plan(2);
+  t.plan(3);
 
-  var host = tdraw(o('ux-input', 1).node(), _uxInput2.default, {}),
-      el = o(host)('input');
+  var host = tdraw(o('ux-input', 1), _uxInput2.default),
+      el = host('input');
+
+  host.on('change', function (value) {
+    return t.equal(value, 'foo', 'change event');
+  });
 
   el.property('value', 'foo').emit('keyup');
 
-  t.equal(host.value, 'foo', 'host value');
+  t.equal(host.node().value, 'foo', 'host value');
   t.equal(el.node().value, 'foo', 'input value');
+
+  o.html('');
 });

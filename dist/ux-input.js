@@ -20,11 +20,11 @@ function uxInput(state) {
 
   o.classed('is-optional', optional).classed('is-focused', focused).classed('is-active', value).property('value', value).attr('name', name);
 
-  o('input', 1).attr('disabled', disabled).attr('placeholder', label).on('focus.focused', focus).on('keyup.value', keyup).on('blur.focused', blur).property('value', iff(function (d) {
+  o('input', 1).property('value', iff(function (d) {
     return is.str(value);
   })(function (d) {
     return value;
-  }));
+  })).attr('disabled', disabled).attr('placeholder', label).on('focus.focused', focus).on('keyup.value', keyup).on('blur.focused', blur);
 
   o('label', 1).text(label);
 
@@ -41,8 +41,6 @@ function uxInput(state) {
   }
 
   function keyup() {
-    state.value = this.value;
-    console.log('state value', state.value);
-    o.draw();
+    o.emit('change', state.value = this.value).draw();
   }
 }

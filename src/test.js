@@ -100,27 +100,31 @@ test('unit test - focused', t => {
 })
 
 test('event test - focus/blur event', t => {
-  const host = tdraw(o('ux-input', 1).node(), input, { })
-      , el = o(host)('input')
+  const host = tdraw(o('ux-input', 1), input)
+      , el = host('input')
 
   time(  0, d => el.emit('focus'))
-  time( 50, d => t.equal(host.className, 'is-focused', 'focus event'))
+  time( 50, d => t.equal(host.node().className, 'is-focused', 'focus event'))
   
   time(100, d => el.emit('blur'))
-  time(150, d => t.equal(host.className, '', 'blur event'))
+  time(150, d => t.equal(host.node().className, '', 'blur event'))
   
   time(200, d => { o.html(''), t.end() })
 })
 
 test('event test - keyup event', t => {
-  t.plan(2)
+  t.plan(3)
 
-  const host = tdraw(o('ux-input', 1).node(), input, { })
-      , el = o(host)('input')
+  const host = tdraw(o('ux-input', 1), input)
+      , el = host('input')
+
+  host.on('change', value => t.equal(value, 'foo', 'change event'))
 
   el.property('value', 'foo')
     .emit('keyup')
 
-  t.equal(host.value, 'foo', 'host value')
+  t.equal(host.node().value, 'foo', 'host value')
   t.equal(el.node().value, 'foo', 'input value')
+
+  o.html('')
 })
