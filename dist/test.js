@@ -65,6 +65,17 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input
   o.html('');
 });
 
+(0, _tape2.default)('unit test - should not reset value', function (t) {
+  t.plan(2);
+
+  var host = o('ux-input', 1).node();
+  _uxInput2.default.call(host, { value: 'foo' });
+  _uxInput2.default.call(host, { value: undefined });
+  t.equal(raw('input', host).value, 'foo', 'reset input value');
+  t.equal(style(raw('label', host)).opacity, '1', 'reset label visible');
+  o.html('');
+});
+
 (0, _tape2.default)('unit test - name', function (t) {
   t.plan(1);
 

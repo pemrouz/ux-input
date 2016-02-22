@@ -8,8 +8,6 @@ function uxInput(state) {
   var o = once(this);
   var _state$label = state.label;
   var label = _state$label === undefined ? '' : _state$label;
-  var _state$value = state.value;
-  var value = _state$value === undefined ? '' : _state$value;
   var _state$focused = state.focused;
   var focused = _state$focused === undefined ? false : _state$focused;
   var _state$optional = state.optional;
@@ -17,14 +15,11 @@ function uxInput(state) {
   var _state$name = state.name;
   var name = _state$name === undefined ? '' : _state$name;
   var disabled = attr('disabled')(this);
+  var value = defaults(state, 'value', (o('input').node() || {}).value);
 
   o.classed('is-optional', optional).classed('is-focused', focused).classed('is-active', value).property('value', value).attr('name', name);
 
-  o('input', 1).property('value', iff(function (d) {
-    return is.str(value);
-  })(function (d) {
-    return value;
-  })).attr('disabled', disabled).attr('placeholder', label).on('focus.focused', focus).on('keyup.value', keyup).on('blur.focused', blur);
+  o('input', 1).property('value', value).attr('disabled', disabled).attr('placeholder', label).on('focus.focused', focus).on('keyup.value', keyup).on('blur.focused', blur);
 
   o('label', 1).text(label);
 

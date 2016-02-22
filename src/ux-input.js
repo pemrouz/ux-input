@@ -1,7 +1,8 @@
 export default function uxInput(state) {
   var o = once(this)
-    , { label = '', value = '', focused = false, optional = false, name = '' } = state
+    , { label = '', focused = false, optional = false, name = '' } = state
     , disabled = attr('disabled')(this)
+    , value = defaults(state, 'value', (o('input').node() || {}).value)
 
   o.classed('is-optional', optional)
     .classed('is-focused', focused)
@@ -10,7 +11,7 @@ export default function uxInput(state) {
     .attr('name', name)
 
   o('input', 1)
-    .property('value', iff(d => is.str(value))(d => value))
+    .property('value'  , value)
     .attr('disabled'   , disabled)
     .attr('placeholder', label)
     .on('focus.focused', focus)

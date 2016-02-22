@@ -63,6 +63,17 @@ test('unit test - value', t => {
   o.html('')
 })
 
+test('unit test - should not reset value', t => {
+  t.plan(2)
+
+  const host = o('ux-input', 1).node()
+  input.call(host, { value: 'foo' })
+  input.call(host, { value: undefined })
+  t.equal(raw('input', host).value, 'foo', 'reset input value')
+  t.equal(style(raw('label', host)).opacity, '1', 'reset label visible')
+  o.html('')
+})
+
 test('unit test - name', t => {
   t.plan(1)
 
