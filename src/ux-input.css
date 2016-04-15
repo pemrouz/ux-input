@@ -8,6 +8,9 @@
 :host * {
   box-sizing: border-box; } 
 
+:host(.is-hidden) {
+  display: none; }
+  
   input {
     padding: 0 .85rem;
     height: 3rem;
@@ -25,6 +28,10 @@
 
   :host(.is-active) input {
     padding: 1.3rem 0.85rem 0.45rem 0.85rem; }
+
+  :host(.is-invalid) input {
+    border-color: rgb(200, 80, 80);
+    background: rgb(255,240,240); }
 
   label {
     position: absolute;
