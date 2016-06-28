@@ -9,94 +9,39 @@ const style = window.getComputedStyle
 
 once(document.head)
   ('style', 1)
-    .html(scope(file('dist/ux-input.css'), 'ux-input'))
+    .html(scope(file('./dist/resources/ux-input.css'), 'ux-input'))
 
-test('unit test - label', t => {
+test('should set placeholder', t => {
   t.plan(1)
-
   const host = o('ux-input', 1).node()
-  input.call(host, { label: 'foo' })
-
+  input.call(host, { placeholder: 'foo' })
   t.equal(host.outerHTML, stripws`
-    <ux-input>
-      <input placeholder="foo">
+    <ux-input tabindex="-1">
+      <input type="text" class="input" placeholder="foo">
       <label>foo</label>
     </ux-input>
   `, 'basic structure')
-
   o.html('')
 })
 
-test('unit test - value', t => {
-  t.plan(2)
-
-  const host = o('ux-input', 1).node()
-  input.call(host, { value: 'foo' })
-
-  t.equal(host.outerHTML, stripws`
-    <ux-input class="is-active">
-      <input>
-      <label></label>
-    </ux-input>
-  `, 'basic structure')
-
-  t.equal(raw('input', host).value, 'foo', 'input value')
-
-  o.html('')
-})
-
-test('unit test - value', t => {
-  t.plan(2)
-
-  const host = o('ux-input', 1).node()
-  input.call(host, { value: 'foo' })
-
-  t.equal(host.outerHTML, stripws`
-    <ux-input class="is-active">
-      <input>
-      <label></label>
-    </ux-input>
-  `, 'basic structure')
-
-  t.equal(raw('input', host).value, 'foo', 'input value')
-
-  o.html('')
-})
-
-test('unit test - should not reset value', t => {
-  t.plan(2)
-
-  const host = o('ux-input', 1).node()
-  input.call(host, { value: 'foo' })
-  input.call(host, { value: undefined })
-  t.equal(raw('input', host).value, 'foo', 'reset input value')
-  t.equal(style(raw('label', host)).opacity, '1', 'reset label visible')
-  o.html('')
-})
-
-test('unit test - name', t => {
+test('should set value', t => {
   t.plan(1)
-
   const host = o('ux-input', 1).node()
-  input.call(host, { name: 'foo' })
-
-  t.ok(includes('<ux-input name="foo">')(host.outerHTML), 'name attr')
-
+  input.call(host, { value: 'foo' })
+  t.equal(raw('input', host).value, 'foo', 'input value')
   o.html('')
 })
 
-test('unit test - optional', t => {
+test('should set optional indicator', t => {
   t.plan(1)
-
   const host = o('ux-input', 1).node()
   input.call(host, { optional: true })
-
-  t.ok(includes('<ux-input class="is-optional">')(host.outerHTML), 'optional attr')
-
+  t.ok(includes('is-optional')(host.className), 'optional attr')
   o.html('')
 })
 
-test('unit test - focused', t => {
+test('should change focus/blur view', t => {
+  t.plan(4)
   const host = o('ux-input', 1).node()
   
   time(  0, d => input.call(host, { focused: false }))
@@ -107,10 +52,11 @@ test('unit test - focused', t => {
   time(200, d => t.equal(host.className, 'is-focused', 'focus class'))
   time(400, d => t.equal(style(raw('label', host)).color, 'rgb(41, 142, 234)', 'focus style'))
   
-  time(450, d => { o.html(''), t.end() })
+  time(450, d => o.html(''))
 })
 
-test('event test - focus/blur event', t => {
+test('should emit focus/blur event', t => {
+  t.plan(2)
   const host = tdraw(o('ux-input', 1), input)
       , el = host('input')
 
@@ -120,16 +66,16 @@ test('event test - focus/blur event', t => {
   time(100, d => el.emit('blur'))
   time(150, d => t.equal(host.node().className, '', 'blur event'))
   
-  time(200, d => { o.html(''), t.end() })
+  time(200, d => o.html(''))
 })
 
-test('event test - keyup event', t => {
+test('should emit keyup event', t => {
   t.plan(3)
 
   const host = tdraw(o('ux-input', 1), input)
       , el = host('input')
 
-  host.on('change', value => t.equal(value, 'foo', 'change event'))
+  host.on('change', d => t.ok(value, 'change event'))
 
   el.property('value', 'foo')
     .emit('keyup')

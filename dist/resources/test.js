@@ -1,7 +1,6 @@
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['\n    <ux-input>\n      <input placeholder="foo">\n      <label>foo</label>\n    </ux-input>\n  '], ['\n    <ux-input>\n      <input placeholder="foo">\n      <label>foo</label>\n    </ux-input>\n  ']),
-    _templateObject2 = _taggedTemplateLiteral(['\n    <ux-input class="is-active">\n      <input>\n      <label></label>\n    </ux-input>\n  '], ['\n    <ux-input class="is-active">\n      <input>\n      <label></label>\n    </ux-input>\n  ']);
+var _templateObject = _taggedTemplateLiteral(['\n    <ux-input tabindex="-1">\n      <input type="text" class="input" placeholder="foo">\n      <label>foo</label>\n    </ux-input>\n  '], ['\n    <ux-input tabindex="-1">\n      <input type="text" class="input" placeholder="foo">\n      <label>foo</label>\n    </ux-input>\n  ']);
 
 require('utilise');
 
@@ -26,79 +25,34 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var style = window.getComputedStyle,
     o = once(document.body)('.container', 1);
 
-once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input.css'), 'ux-input'));
+once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resources/ux-input.css'), 'ux-input'));
 
-(0, _tape2.default)('unit test - label', function (t) {
+(0, _tape2.default)('should set placeholder', function (t) {
   t.plan(1);
-
   var host = o('ux-input', 1).node();
-  _uxInput2.default.call(host, { label: 'foo' });
-
+  _uxInput2.default.call(host, { placeholder: 'foo' });
   t.equal(host.outerHTML, stripws(_templateObject), 'basic structure');
-
   o.html('');
 });
 
-(0, _tape2.default)('unit test - value', function (t) {
-  t.plan(2);
-
-  var host = o('ux-input', 1).node();
-  _uxInput2.default.call(host, { value: 'foo' });
-
-  t.equal(host.outerHTML, stripws(_templateObject2), 'basic structure');
-
-  t.equal(raw('input', host).value, 'foo', 'input value');
-
-  o.html('');
-});
-
-(0, _tape2.default)('unit test - value', function (t) {
-  t.plan(2);
-
-  var host = o('ux-input', 1).node();
-  _uxInput2.default.call(host, { value: 'foo' });
-
-  t.equal(host.outerHTML, stripws(_templateObject2), 'basic structure');
-
-  t.equal(raw('input', host).value, 'foo', 'input value');
-
-  o.html('');
-});
-
-(0, _tape2.default)('unit test - should not reset value', function (t) {
-  t.plan(2);
-
-  var host = o('ux-input', 1).node();
-  _uxInput2.default.call(host, { value: 'foo' });
-  _uxInput2.default.call(host, { value: undefined });
-  t.equal(raw('input', host).value, 'foo', 'reset input value');
-  t.equal(style(raw('label', host)).opacity, '1', 'reset label visible');
-  o.html('');
-});
-
-(0, _tape2.default)('unit test - name', function (t) {
+(0, _tape2.default)('should set value', function (t) {
   t.plan(1);
-
   var host = o('ux-input', 1).node();
-  _uxInput2.default.call(host, { name: 'foo' });
-
-  t.ok(includes('<ux-input name="foo">')(host.outerHTML), 'name attr');
-
+  _uxInput2.default.call(host, { value: 'foo' });
+  t.equal(raw('input', host).value, 'foo', 'input value');
   o.html('');
 });
 
-(0, _tape2.default)('unit test - optional', function (t) {
+(0, _tape2.default)('should set optional indicator', function (t) {
   t.plan(1);
-
   var host = o('ux-input', 1).node();
   _uxInput2.default.call(host, { optional: true });
-
-  t.ok(includes('<ux-input class="is-optional">')(host.outerHTML), 'optional attr');
-
+  t.ok(includes('is-optional')(host.className), 'optional attr');
   o.html('');
 });
 
-(0, _tape2.default)('unit test - focused', function (t) {
+(0, _tape2.default)('should change focus/blur view', function (t) {
+  t.plan(4);
   var host = o('ux-input', 1).node();
 
   time(0, function (d) {
@@ -122,11 +76,12 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input
   });
 
   time(450, function (d) {
-    o.html(''), t.end();
+    return o.html('');
   });
 });
 
-(0, _tape2.default)('event test - focus/blur event', function (t) {
+(0, _tape2.default)('should emit focus/blur event', function (t) {
+  t.plan(2);
   var host = tdraw(o('ux-input', 1), _uxInput2.default),
       el = host('input');
 
@@ -145,18 +100,18 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('dist/ux-input
   });
 
   time(200, function (d) {
-    o.html(''), t.end();
+    return o.html('');
   });
 });
 
-(0, _tape2.default)('event test - keyup event', function (t) {
+(0, _tape2.default)('should emit keyup event', function (t) {
   t.plan(3);
 
   var host = tdraw(o('ux-input', 1), _uxInput2.default),
       el = host('input');
 
-  host.on('change', function (value) {
-    return t.equal(value, 'foo', 'change event');
+  host.on('change', function (d) {
+    return t.ok(value, 'change event');
   });
 
   el.property('value', 'foo').emit('keyup');

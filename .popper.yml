@@ -5,7 +5,7 @@ globals:
 
 runner: tape
 
-tests: (npm run build > /dev/null) && browserify ./dist/test.js
+tests: (npm run build > /dev/null) && browserify ./dist/resources/test.js
   -i jsdom 
   -t utilise.filify 
   -t babelify
