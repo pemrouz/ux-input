@@ -46,7 +46,7 @@ function uxInput(state) {
     o.draw();
   }
 
-  function blur(e) {
+  function blur(d, i, el, e) {
     if (!state.focused) return;
     if (e.relatedTarget == host) return refocus(state.focused = false);
     // return console.log('refocusing', state.focused, attr('name')(host)), refocus()
@@ -58,7 +58,7 @@ function uxInput(state) {
     o.emit('change', state.value = this[text]).draw();
   }
 
-  function submit(e) {
+  function submit(d, i, el, e) {
     if (multiline) return;
     if (e.key == 'Enter') {
       e.preventDefault();
