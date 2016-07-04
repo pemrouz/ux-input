@@ -10,10 +10,12 @@
   },
   "scripts": {
     "bundle": "sh -c 'echo \"ripple(require(\\'./\\'))\" | browserify - -o dist/client.js",
+    "gzip": "gzip -c dist/client.min.js > dist/client.min.js.gz",
+    "minify": "uglifyjs dist/client.js -m -c keep_fargs=false -o dist/client.min.js --screw-ie8",
     "babel": "babel src -d dist --copy-files",
     "clean": "rm -rf dist && mkdir dist",
     "export": "sh -c 'rijs.export'",
-    "build": "npm run clean && npm run babel && npm run export && npm run bundle",
+    "build": "npm run clean && npm run babel && npm run export && npm run bundle && npm run minify && npm run gzip",
     "test": "popper",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags"

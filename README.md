@@ -7,21 +7,50 @@ A simple input component implementing [infield top-aligned form labels](http://u
 <img src="https://raw.githubusercontent.com/vanillacomponents/ux-input/master/demo.gif">
 
 <br>
-### Options
+### Usage
 
-* **`label`**: The placeholder text to display (default: `''`)
-* **`value`**: The value that will be displayed (default: `''`)
-* **`name`**: An optional value for the `name` attribute on the parent (default: `''`)
-* **`focused`**: Whether the component is in the focused state or not (default: `false`)
-* **`optional`**: If true, an `optional` label will be displayed on the top-right (default: `false`)
+This module exports:
+
+* `ux-input`
+* `ux-input.css`
+
+You can require the resources individually and [use them directly](https://github.com/pemrouz/vanilla/#vanilla) or register them with [ripple](https://github.com/rijs/minimal#minimal) and use them as custom elements. See[`demo.html`](https://rawgithub.com/vanillacomponents/ux-input/master/demo.html) for a quick example.
 
 <br>
 ### API
 
-* **`.value`**: The current value of the element
+These are all the options you can pass to the component:
+
+**`value = ''`**
+
+The value of the element
+
+**`placeholder = ''`**
+
+The placeholder text to display
+
+**`multiline = false`**
+
+Allows using this component like a `textarea` 
+
+**`focused = false`**
+
+Whether the component is in the focused state or not
+
+**`optional = false`**
+
+If true, an `optional` label will be displayed on the 
+top-right
+
+**`type = 'text'`**
+
+The type attribute to use on the underlying input element 
+
+The following will also be set on the underlying input element if specified: `min`, `max`, `disabled`, `autofocus`, `required`
 
 <br>
 ### Events
 
-* **`.on('input', key => ...)`**: Proxies individual input events with the correct [key identifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) set
-* **`.on('change', value => ...)`**: Notifies of changes smoothed out (debounced) over a 100ms period to avoid spamming. First parameter is the current value.
+**`change`**
+
+Notifies of changes to the value.

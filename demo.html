@@ -1,3 +1,15 @@
-<ux-input value="wat" placeholder="here"></ux-input>
-<script src="node_modules/rijs.minimal/dist/ripple.js"></script>
-<script src="dist/client.js"></script>
+<body></body>
+<script src="https://rawgithub.com/rijs/minimal/master/dist/ripple.min.js"></script>
+<script src="dist/client.js" charset="utf-8"></script>
+<script>
+  // using once
+  var o = once(document.body)
+  o('ux-input', { placeholder: 'First Name' })
+    // .on('change', (d, i, el, e) => {})
+
+  // no helpers
+  // var input = document.createElement('ux-input')
+  // document.body.appendChild(input)
+  // input.state = { placeholder: 'First Name' }
+  // input.draw()
+</script>
