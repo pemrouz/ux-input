@@ -1,23 +1,20 @@
 # `ux-input`
 
 [![image](https://img.shields.io/badge/component-vanilla-green.svg?style=flat-square)](https://github.com/pemrouz/vanilla/#vanilla)
+[![Build Status](https://travis-ci.org/vanillacomponents/ux-input.svg)](https://travis-ci.org/vanillacomponents/ux-input)
+[![Coverage Status](https://coveralls.io/repos/vanillacomponents/ux-input/badge.svg?branch=master&service=github)](https://coveralls.io/github/vanillacomponents/ux-input?branch=master)
+<br>[![Browser Results](https://saucelabs.com/browser-matrix/ux-input.svg)](https://saucelabs.com/u/ux-input)
+
 
 A simple input component implementing [infield top-aligned form labels](http://uxmovement.com/forms/why-infield-top-aligned-form-labels-are-quickest-to-scan/). Labels are displayed as placeholders and subsequently at the top of the field when the component has a value.
 
 <img src="https://raw.githubusercontent.com/vanillacomponents/ux-input/master/demo.gif">
 
 <br>
-### Usage
-
-This module exports:
-
-* `ux-input`
-* `ux-input.css`
-
-You can require the resources individually and [use them directly](https://github.com/pemrouz/vanilla/#vanilla) or register them with [ripple](https://github.com/rijs/minimal#minimal) and use them as custom elements. See[`demo.html`](https://rawgithub.com/vanillacomponents/ux-input/master/demo.html) for a quick example.
+### [Usage](https://github.com/pemrouz/vanilla/#using)
 
 <br>
-### API
+### State
 
 These are all the options you can pass to the component:
 

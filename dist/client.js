@@ -41,7 +41,7 @@ function uxInput(state) {
 
   o.attr('tabindex', '-1').classed('is-optional', optional).classed('is-focused', focused).classed('is-active', value).property('value', value).attr('multiline', multiline).on('focus.refocus', refocus);
 
-  o(selector, 1).property('value', value).attr('min', min).attr('max', max).attr('disabled', disabled).attr('required', required).attr('autofocus', autofocus).attr('placeholder', placeholder).on('keyup.value', input).on('keydown.value', submit).on('focus.focused', focus).on('blur.focused', blur).text(value);
+  o(selector, 1).property('value', value).attr('min', min).attr('max', max).attr('disabled', disabled).attr('required', required).attr('autofocus', autofocus).attr('placeholder', placeholder).on('input.value', input).on('keydown.submit', submit).on('focus.focused', focus).on('blur.focused', blur).text(value);
 
   o('label', 1).text(placeholder);
 
@@ -59,7 +59,6 @@ function uxInput(state) {
   function blur(d, i, el, e) {
     if (!state.focused) return;
     if (e.relatedTarget == host) return refocus(state.focused = false);
-    // return console.log('refocusing', state.focused, attr('name')(host)), refocus()
     state.focused = false;
     o.emit('blur').draw();
   }

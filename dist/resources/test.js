@@ -6,10 +6,6 @@ require('utilise');
 
 require('browserenv');
 
-var _tape = require('tape');
-
-var _tape2 = _interopRequireDefault(_tape);
-
 var _cssscope = require('cssscope');
 
 var _cssscope2 = _interopRequireDefault(_cssscope);
@@ -23,11 +19,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var style = window.getComputedStyle,
-    o = once(document.body)('.container', 1);
+    o = once(document.body)('.container', 1),
+    test = require('tap').test;
 
 once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resources/ux-input.css'), 'ux-input'));
 
-(0, _tape2.default)('should set placeholder', function (t) {
+test('should set placeholder', function (t) {
   t.plan(1);
   var host = o('ux-input', 1).node();
   _uxInput2.default.call(host, { placeholder: 'foo' });
@@ -35,7 +32,7 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resour
   o.html('');
 });
 
-(0, _tape2.default)('should set value', function (t) {
+test('should set value', function (t) {
   t.plan(1);
   var host = o('ux-input', 1).node();
   _uxInput2.default.call(host, { value: 'foo' });
@@ -43,7 +40,7 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resour
   o.html('');
 });
 
-(0, _tape2.default)('should set optional indicator', function (t) {
+test('should set optional indicator', function (t) {
   t.plan(1);
   var host = o('ux-input', 1).node();
   _uxInput2.default.call(host, { optional: true });
@@ -51,7 +48,7 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resour
   o.html('');
 });
 
-(0, _tape2.default)('should change focus/blur view', function (t) {
+test('should change focus/blur view', function (t) {
   t.plan(4);
   var host = o('ux-input', 1).node();
 
@@ -80,7 +77,7 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resour
   });
 });
 
-(0, _tape2.default)('should emit focus/blur event', function (t) {
+test('should emit focus/blur event', function (t) {
   t.plan(2);
   var host = tdraw(o('ux-input', 1), _uxInput2.default),
       el = host('input');
@@ -104,19 +101,19 @@ once(document.head)('style', 1).html((0, _cssscope2.default)(file('./dist/resour
   });
 });
 
-(0, _tape2.default)('should emit keyup event', function (t) {
+test('should emit on input event', function (t) {
   t.plan(3);
 
   var host = tdraw(o('ux-input', 1), _uxInput2.default),
       el = host('input');
 
   host.on('change', function (d) {
-    return t.ok(value, 'change event');
+    return t.ok(d, 'change event');
   });
 
-  el.property('value', 'foo').emit('keyup');
+  el.property('value', 'foo').emit('input');
 
-  t.equal(host.node().value, 'foo', 'host value');
+  t.equal(host.node().state.value, 'foo', 'host value');
   t.equal(el.node().value, 'foo', 'input value');
 
   o.html('');

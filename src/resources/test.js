@@ -1,11 +1,11 @@
 import 'utilise'
 import 'browserenv'
-import test from 'tape'
 import scope from 'cssscope'
 import input from './ux-input'
 
 const style = window.getComputedStyle
     , o = once(document.body)('.container', 1)
+    , test = require('tap').test
 
 once(document.head)
   ('style', 1)
@@ -69,18 +69,18 @@ test('should emit focus/blur event', t => {
   time(200, d => o.html(''))
 })
 
-test('should emit keyup event', t => {
+test('should emit on input event', t => {
   t.plan(3)
 
   const host = tdraw(o('ux-input', 1), input)
       , el = host('input')
 
-  host.on('change', d => t.ok(value, 'change event'))
+  host.on('change', d => t.ok(d, 'change event'))
 
   el.property('value', 'foo')
-    .emit('keyup')
+    .emit('input')
 
-  t.equal(host.node().value, 'foo', 'host value')
+  t.equal(host.node().state.value, 'foo', 'host value')
   t.equal(el.node().value, 'foo', 'input value')
 
   o.html('')

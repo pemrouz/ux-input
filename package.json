@@ -17,6 +17,8 @@
     "export": "sh -c 'rijs.export'",
     "build": "npm run clean && npm run babel && npm run export && npm run bundle && npm run minify && npm run gzip",
     "test": "popper",
+    "test-node": "tap dist/**/test.js",
+    "coverage": "tap dist/**/test.js --cov --coverage-report=lcov",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags"
   },
@@ -24,13 +26,15 @@
     "babel-cli": "*",
     "babel-preset-es2015": "*",
     "babelify": "*",
-    "popper": "*",
-    "browserify": "*",
     "browserenv": "*",
-    "tape": "*",
-    "utilise": "*",
+    "browserify": "*",
     "cssscope": "*",
-    "utilise.filify": "*",
-    "rijs.export": "*"
+    "popper": "*",
+    "rijs.export": "*",
+    "tap": "^6.2.0",
+    "tape": "*",
+    "tapify": "0.0.1",
+    "utilise": "*",
+    "utilise.filify": "*"
   }
 }
