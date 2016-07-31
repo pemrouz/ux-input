@@ -56,7 +56,6 @@ export default function uxInput(state) {
   function blur(d, i, el, e) {
     if (!state.focused) return
     if (e.relatedTarget == host) return refocus(state.focused = false)
-      // return console.log('refocusing', state.focused, attr('name')(host)), refocus()
     state.focused = false
     o.emit('blur')
      .draw()
