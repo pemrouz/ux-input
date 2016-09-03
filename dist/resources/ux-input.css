@@ -1,4 +1,5 @@
 :host {
+  outline: none;
   height: 3em;
   box-sizing: border-box;
   font-size: inherit;
@@ -7,22 +8,19 @@
   display: inline-block; 
   vertical-align: text-bottom; }
 
-:host([multiline]) {
-  height: 150px; }
-
 :host * {
   box-sizing: border-box; } 
+
+:host(.is-multiline) {
+  height: 150px; }
 
 :host(.is-hidden) {
   display: none; }
 
-  :host(:not([multiline])) .input {
-    white-space: nowrap; }
+:host(.is-disabled) {
+  cursor: not-allowed; }
 
-  :host([multiline]) .input {
-    word-break: break-all; }
-
-  .input {
+  .textfield {
     overflow: hidden;
     line-height: 1em;
     background-color: white;
@@ -37,21 +35,31 @@
     width: 100%;
     color: #444;
     display: block;
+    cursor: inherit;
     border-radius: 3px;
     transition: all 0.2s ease-in-out; }
 
-  :host(:not(.is-active)) div.input::before {
+  .textfield:focus {
+    border-color: var(--ux-input-primary, #298eea); }
+
+  :host(.is-disabled) .textfield {
+    background: rgb(235, 235, 228); }
+
+  :host(:not(.is-multiline)) .textfield {
+    white-space: nowrap; }
+
+  :host(.is-multiline) .textfield {
+    word-break: break-all; }
+
+  :host(.is-active) .textfield {
+    padding: 1.3em 0.85em 0.45em 0.85em; }
+
+  :host(:not(.is-active)) div.textfield::before {
     position: absolute;
     display: inline-block;
     margin-top: 2px;
     content: attr(placeholder);  
     opacity: 0.6; }
-
-  .input:focus {
-    border-color: #298eea; }
-
-  :host(.is-active) .input {
-    padding: 1.3em 0.85em 0.45em 0.85em; }
 
   label {
     position: absolute;
@@ -63,7 +71,8 @@
     color: #bbbbbb;
     display: block;
     opacity: 0;
-    z-index: 10;
+    /*z-index: 10;*/
+    cursor: inherit;
     transition: all 0.2s ease-in-out; }
   
   :host(.is-focused) label {
@@ -74,8 +83,8 @@
 
   :host(.is-optional)::after {
     position: absolute;
-    right: 1.3em;
-    top: 6px;
-    font-size: 0.7em;
+    right: 1em;
+    top: 0.3em;
+    font-size: 0.6em;
     color: #ccc;
     content: 'optional'; }

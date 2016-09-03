@@ -1,6 +1,6 @@
-export default function uxInput(state) {
-  const o = once(this)
-      , host        = this.host || this
+export default function uxInput(node, state) {
+  const o           = once(node)
+      , host        = node.host || node
       , type        = defaults(state, 'type'       , 'text')
       , value       = defaults(state, 'value'      , '')
       , min         = defaults(state, 'min'        , false)
@@ -14,19 +14,21 @@ export default function uxInput(state) {
       , placeholder = defaults(state, 'placeholder', '')
       , text        = multiline ? 'textContent' : 'value'
       , selector    = multiline
-        ? `.input[contenteditable="true"]`
-        : `input.input[type="${type}"]`
+        ? `.textfield[contenteditable="true"]`
+        : `input.textfield[type="${type}"]`
 
-  o.attr('tabindex', '-1')
-    .classed('is-optional', optional)
-    .classed('is-focused' , focused)
-    .classed('is-active'  , value)
-    .property('value'     , value)
-    .attr('multiline'     , multiline)
-    .on('focus.refocus'   , refocus)
+  o.attr('tabindex', '0')
+    .classed('is-optional' , optional)
+    .classed('is-focused'  , focused)
+    .classed('is-disabled' , disabled)
+    .classed('is-multiline', multiline)
+    .classed('is-active'   , value)
+    .property('value'      , value)
+    .on('focus.refocus'    , refocus)
 
   o(selector, 1)
     .property('value'   , value)
+    .attr('tabindex'    , -1)
     .attr('min'         , min)
     .attr('max'         , max)
     .attr('disabled'    , disabled)
@@ -44,7 +46,7 @@ export default function uxInput(state) {
 
   function refocus() {
     if (state.focused) return
-    o('.input').node().focus()
+    o('.textfield').node().focus()
   }
 
   function focus() {
@@ -70,8 +72,7 @@ export default function uxInput(state) {
     if (multiline) return
     if (e.key == 'Enter') {
       e.preventDefault()
-      o.node()
-       .closest('form')
+      o.closest('form')
        .emit('submit')
     }
   }

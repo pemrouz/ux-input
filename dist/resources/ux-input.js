@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = uxInput;
-function uxInput(state) {
-  var o = once(this),
-      host = this.host || this,
+function uxInput(node, state) {
+  var o = once(node),
+      host = node.host || node,
       type = defaults(state, 'type', 'text'),
       value = defaults(state, 'value', ''),
       min = defaults(state, 'min', false),
@@ -19,17 +19,17 @@ function uxInput(state) {
       multiline = defaults(state, 'multiline', false),
       placeholder = defaults(state, 'placeholder', ''),
       text = multiline ? 'textContent' : 'value',
-      selector = multiline ? '.input[contenteditable="true"]' : 'input.input[type="' + type + '"]';
+      selector = multiline ? '.textfield[contenteditable="true"]' : 'input.textfield[type="' + type + '"]';
 
-  o.attr('tabindex', '-1').classed('is-optional', optional).classed('is-focused', focused).classed('is-active', value).property('value', value).attr('multiline', multiline).on('focus.refocus', refocus);
+  o.attr('tabindex', '0').classed('is-optional', optional).classed('is-focused', focused).classed('is-disabled', disabled).classed('is-multiline', multiline).classed('is-active', value).property('value', value).on('focus.refocus', refocus);
 
-  o(selector, 1).property('value', value).attr('min', min).attr('max', max).attr('disabled', disabled).attr('required', required).attr('autofocus', autofocus).attr('placeholder', placeholder).on('input.value', input).on('keydown.submit', submit).on('focus.focused', focus).on('blur.focused', blur).text(value);
+  o(selector, 1).property('value', value).attr('tabindex', -1).attr('min', min).attr('max', max).attr('disabled', disabled).attr('required', required).attr('autofocus', autofocus).attr('placeholder', placeholder).on('input.value', input).on('keydown.submit', submit).on('focus.focused', focus).on('blur.focused', blur).text(value);
 
   o('label', 1).text(placeholder);
 
   function refocus() {
     if (state.focused) return;
-    o('.input').node().focus();
+    o('.textfield').node().focus();
   }
 
   function focus() {
@@ -53,7 +53,7 @@ function uxInput(state) {
     if (multiline) return;
     if (e.key == 'Enter') {
       e.preventDefault();
-      o.node().closest('form').emit('submit');
+      o.closest('form').emit('submit');
     }
   }
 }
