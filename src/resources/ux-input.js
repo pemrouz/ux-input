@@ -2,7 +2,7 @@ export default function uxInput(node, state) {
   const o           = once(node)
       , host        = node.host || node
       , type        = defaults(state, 'type'       , 'text')
-      , value       = defaults(state, 'value'      , '')
+      , value       = defaults(state, 'value'      , state.default || '')
       , min         = defaults(state, 'min'        , false)
       , max         = defaults(state, 'max'        , false)
       , focused     = defaults(state, 'focused'    , false)
