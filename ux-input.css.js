@@ -1,3 +1,4 @@
+module.exports = `
 :host {
   outline: none;
   height: 3em;
@@ -88,3 +89,4 @@
     font-size: 0.6em;
     color: #ccc;
     content: 'optional'; }
+`

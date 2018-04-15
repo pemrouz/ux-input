@@ -1,4 +1,11 @@
-export default function uxInput(node, state) {
+const define   = require('@compone/define')
+    , style    = require('@compone/style')
+    , styles   = require('./ux-input.css.js')
+    , defaults = require('utilise/defaults')
+    , once     = require('utilise/once')
+
+module.exports = define('ux-input', function uxInput(node, state) {
+  style(node, styles)
   const o           = once(node)
       , host        = node.host || node
       , type        = defaults(state, 'type'       , 'text')
@@ -55,7 +62,7 @@ export default function uxInput(node, state) {
     o.draw()
   }
 
-  function blur(d, i, el, e) {
+  function blur(e) {
     if (!state.focused) return
     if (e.relatedTarget == host) return refocus(state.focused = false)
     state.focused = false
@@ -68,7 +75,7 @@ export default function uxInput(node, state) {
      .draw()
   }
 
-  function submit(d, i, el, e) {
+  function submit(e) {
     if (multiline) return
     if (e.key == 'Enter') {
       e.preventDefault()
@@ -76,4 +83,4 @@ export default function uxInput(node, state) {
        .emit('submit')
     }
   }
-}
+})
